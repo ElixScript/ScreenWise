@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palet utama presentasi */
+  --color-brand-blue: #4f9dff;
+  --color-brand-green: #5ccb5f;
+  --color-brand-yellow: #ffd54f;
+  --color-brand-orange: #ffb74d;
+  --color-brand-purple: #b39ddb;
+  --color-brand-pink: #f48fb1;
+  --color-brand-ink: #2d3a53;
+
+  /* Font (di-inject lewat next/font pada layout) */
+  --font-display: var(--font-baloo);
+  --font-body: var(--font-nunito);
+  --font-ui: var(--font-poppins);
+
+  /* Bayangan lembut khas kartu anak-anak */
+  --shadow-soft: 0 10px 30px -10px rgb(45 58 83 / 0.18);
+  --shadow-pop: 0 18px 45px -12px rgb(45 58 83 / 0.28);
+
+  --radius-blob: 2.5rem;
+
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-float-slow: float 8s ease-in-out infinite;
+  --animate-wiggle: wiggle 2.4s ease-in-out infinite;
+  --animate-twinkle: twinkle 2s ease-in-out infinite;
+  --animate-sway: sway 4s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.45;
+      transform: scale(0.8);
+    }
+  }
+
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-2deg);
+    }
+    50% {
+      transform: rotate(2deg);
+    }
+  }
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font-body), sans-serif;
+  color: var(--color-brand-ink);
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Judul default memakai font display yang bulat & ramah */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), var(--font-body), sans-serif;
+}
+
+/* Fokus keyboard yang jelas untuk anak & guru */
+:focus-visible {
+  outline: 4px solid var(--color-brand-blue);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+::selection {
+  background: var(--color-brand-yellow);
+  color: var(--color-brand-ink);
+}
+
+/* Sembunyikan scrollbar (strip navigasi) namun tetap bisa digulir */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Kartu kaca ringan (glassmorphism lembut) */
+.glass {
+  background: rgb(255 255 255 / 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Hormati preferensi pengurangan gerakan */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
