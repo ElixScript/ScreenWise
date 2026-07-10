@@ -2,28 +2,21 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Gamepad2, Rocket, Smartphone, Laptop, Tablet, Watch } from "lucide-react";
 import Mascot from "@/components/mascot/Mascot";
 import BigButton from "@/components/ui/BigButton";
 import SlideBody from "@/components/ui/SlideBody";
-import { Sun, Cloud, Bird, Balloon, GrassStrip } from "@/components/illustrations/Nature";
-import { SparkleField } from "@/components/backgrounds/Decor";
+import { AuroraBackground, ParticleField } from "@/components/backgrounds/Aurora";
 import { useSound } from "@/hooks/useSound";
 import type { SlideProps } from "@/types/slides";
 
-const TITLE_WORDS = [
-  { text: "Edukasi", className: "text-brand-ink" },
-  { text: "Penggunaan Gadget", className: "text-brand-blue" },
-  { text: "yang Sehat", className: "text-emerald-500" },
-  { text: "dan Bijak", className: "text-orange-400" },
+/** Chip gadget melayang di sekitar judul — kesan lobby game. */
+const FLOATING_CHIPS = [
+  { icon: Smartphone, className: "left-[8%] top-[20%]", delay: 1.6, duration: 5 },
+  { icon: Laptop, className: "right-[9%] top-[16%]", delay: 1.9, duration: 6 },
+  { icon: Tablet, className: "left-[13%] bottom-[24%]", delay: 2.2, duration: 5.5 },
+  { icon: Watch, className: "right-[14%] bottom-[28%]", delay: 2.5, duration: 4.8 },
 ];
-
-const BALLOONS = [
-  { left: "6%", color: "red", delay: 0, duration: 13 },
-  { left: "16%", color: "yellow", delay: 4, duration: 16 },
-  { left: "82%", color: "blue", delay: 2, duration: 14 },
-  { left: "90%", color: "green", delay: 6, duration: 17 },
-  { left: "72%", color: "purple", delay: 9, duration: 15 },
-] as const;
 
 export default function OpeningSlide({ onNext }: SlideProps) {
   const [starting, setStarting] = useState(false);
@@ -37,125 +30,91 @@ export default function OpeningSlide({ onNext }: SlideProps) {
   };
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-gradient-to-b from-sky-300 via-sky-100 to-amber-50">
-      {/* Matahari terbit */}
-      <motion.div
-        className="absolute left-[7%] top-[8%]"
-        initial={{ y: 160, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1.6, ease: "easeOut" }}
-      >
-        <Sun className="w-24 md:w-32" />
-      </motion.div>
+    <div className="relative h-full w-full overflow-hidden">
+      <AuroraBackground tone="mixed" intensity={0.55} />
+      <ParticleField count={26} />
 
-      {/* Awan berarak */}
-      {[
-        { top: "6%", scale: 1, duration: 55, delay: 0 },
-        { top: "18%", scale: 0.7, duration: 70, delay: 8 },
-        { top: "12%", scale: 0.5, duration: 45, delay: 20 },
-      ].map((c, i) => (
+      {/* Chip gadget melayang */}
+      {FLOATING_CHIPS.map(({ icon: Icon, className, delay, duration }, i) => (
         <motion.div
           key={i}
-          className="absolute"
-          style={{ top: c.top, scale: c.scale }}
-          initial={{ x: "-20vw" }}
-          animate={{ x: "110vw" }}
-          transition={{ duration: c.duration, delay: c.delay, repeat: Infinity, ease: "linear" }}
-        >
-          <Cloud className="w-32 md:w-44" />
-        </motion.div>
-      ))}
-
-      {/* Burung terbang */}
-      {[
-        { top: "22%", duration: 18, delay: 1.5, color: "#FF8FAB" },
-        { top: "30%", duration: 24, delay: 8, color: "#7FB9FF" },
-      ].map((b, i) => (
-        <motion.div
-          key={i}
-          className="absolute"
-          style={{ top: b.top }}
-          initial={{ x: "-10vw", y: 0 }}
-          animate={{ x: "110vw", y: [0, -20, 8, -14, 0] }}
+          className={`glass absolute hidden rounded-2xl p-3.5 md:block ${className}`}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1, y: [0, -14, 0], rotate: [0, i % 2 === 0 ? 4 : -4, 0] }}
           transition={{
-            x: { duration: b.duration, delay: b.delay, repeat: Infinity, ease: "linear" },
-            y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+            opacity: { delay, duration: 0.6 },
+            scale: { delay, type: "spring", stiffness: 200, damping: 14 },
+            y: { delay, duration, repeat: Infinity, ease: "easeInOut" },
+            rotate: { delay, duration: duration * 1.2, repeat: Infinity, ease: "easeInOut" },
           }}
+          aria-hidden
         >
-          <Bird className="w-10 md:w-14" color={b.color} />
+          <Icon className="h-7 w-7 text-cyan-300" strokeWidth={2} />
         </motion.div>
       ))}
 
-      {/* Balon naik */}
-      {BALLOONS.map((b, i) => (
-        <motion.div
-          key={i}
-          className="absolute"
-          style={{ left: b.left }}
-          initial={{ y: "110vh" }}
-          animate={{ y: "-30vh" }}
-          transition={{ duration: b.duration, delay: b.delay, repeat: Infinity, ease: "linear" }}
-        >
-          <Balloon color={b.color} className="w-10 md:w-14" />
-        </motion.div>
-      ))}
-
-      <SparkleField count={12} />
-
-      {/* Konten utama */}
-      <SlideBody className="gap-6">
-        <div className="flex flex-col items-center gap-4 md:flex-row md:gap-10">
+      <SlideBody className="gap-8">
+        <div className="flex flex-col items-center gap-6 md:flex-row md:gap-12">
           <motion.div
-            initial={{ x: -220, opacity: 0, rotate: -12 }}
+            initial={{ x: -180, opacity: 0, rotate: -10 }}
             animate={{ x: 0, opacity: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 90, damping: 14, delay: 0.4 }}
+            transition={{ type: "spring", stiffness: 90, damping: 14, delay: 0.5 }}
           >
             <Mascot pose={starting ? "jump" : "wave"} face="excited" className="w-36 md:w-52" />
           </motion.div>
 
           <div className="text-center md:text-left">
-            <h1 className="flex flex-col gap-1 text-5xl font-extrabold leading-tight md:text-6xl lg:text-7xl">
-              {TITLE_WORDS.map((word, i) => (
+            <motion.span
+              initial={{ opacity: 0, y: -14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.5 }}
+              className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-ui text-xs font-semibold uppercase tracking-[0.25em] text-cyan-300 md:text-sm"
+            >
+              <Rocket className="h-4 w-4" aria-hidden /> Misi Belajar Interaktif
+            </motion.span>
+
+            <h1 className="mt-4 flex flex-col gap-1 font-display font-extrabold leading-[1.12]">
+              {[
+                { text: "Edukasi", className: "text-ink-bright text-4xl md:text-5xl" },
+                { text: "Penggunaan Gadget", className: "text-gradient text-5xl md:text-7xl" },
+                { text: "yang Sehat & Bijak", className: "text-gradient-gold text-4xl md:text-6xl" },
+              ].map((line, i) => (
                 <motion.span
-                  key={word.text}
-                  initial={{ y: 46, opacity: 0, scale: 0.8 }}
-                  animate={{ y: 0, opacity: 1, scale: 1 }}
-                  transition={{ type: "spring", stiffness: 210, damping: 16, delay: 0.7 + i * 0.35 }}
-                  className={word.className}
+                  key={line.text}
+                  initial={{ y: 40, opacity: 0, filter: "blur(10px)" }}
+                  animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                  transition={{ type: "spring", stiffness: 170, damping: 18, delay: 0.8 + i * 0.35 }}
+                  className={line.className}
                 >
-                  {word.text}
+                  {line.text}
                 </motion.span>
               ))}
             </h1>
+
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.2, duration: 0.6 }}
-              className="mt-4 text-xl font-bold text-brand-ink/70 md:text-2xl"
+              transition={{ delay: 2.1, duration: 0.6 }}
+              className="mt-4 text-lg font-semibold text-ink-dim md:text-xl"
             >
-              Petualangan seru bersama Bimo si Robot Pintar! 🤖✨
+              Petualangan seru bersama Bimo si Robot Pintar
             </motion.p>
           </div>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: [1, 1.05, 1] }}
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: [1, 1.04, 1] }}
           transition={{
-            opacity: { delay: 2.7, duration: 0.4 },
-            scale: { delay: 3.1, duration: 1.6, repeat: Infinity, ease: "easeInOut" },
+            opacity: { delay: 2.5, duration: 0.4 },
+            scale: { delay: 2.9, duration: 1.8, repeat: Infinity, ease: "easeInOut" },
           }}
         >
-          <BigButton size="xl" color="orange" onClick={handleStart} ariaLabel="Mulai belajar">
-            🎮 AYO MULAI BELAJAR!
+          <BigButton size="xl" color="amber" onClick={handleStart} ariaLabel="Mulai misi belajar">
+            <Gamepad2 className="h-7 w-7" /> Mulai Misi
           </BigButton>
         </motion.div>
       </SlideBody>
-
-      {/* Rumput */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <GrassStrip className="h-20 md:h-28" />
-      </div>
     </div>
   );
 }

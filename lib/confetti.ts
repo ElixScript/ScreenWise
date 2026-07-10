@@ -1,6 +1,6 @@
 import confetti from "canvas-confetti";
 
-const BRAND_COLORS = ["#4F9DFF", "#5CCB5F", "#FFD54F", "#FFB74D", "#B39DDB", "#F48FB1"];
+const BRAND_COLORS = ["#22d3ee", "#a78bfa", "#f472b6", "#fbbf24", "#4ade80", "#e0f2fe"];
 
 /** Letusan kecil untuk jawaban benar / interaksi sukses. */
 export function burstConfetti(origin?: { x: number; y: number }) {

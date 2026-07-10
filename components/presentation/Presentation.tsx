@@ -60,7 +60,7 @@ function PresentationInner() {
   const transition = getSlideTransition(index);
 
   return (
-    <main className="relative h-dvh w-full overflow-hidden bg-white">
+    <main className="relative h-dvh w-full overflow-hidden bg-deep">
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
@@ -77,9 +77,9 @@ function PresentationInner() {
       <HudControls />
       <NavBar index={index} onPrev={goPrev} onNext={goNext} onJump={goTo} />
 
-      {/* Penghitung halaman untuk guru */}
-      <div className="glass absolute left-4 bottom-4 z-40 hidden rounded-full px-4 py-1.5 font-ui text-sm font-bold text-brand-ink/60 shadow-soft lg:block">
-        {index + 1} / {TOTAL_SLIDES}
+      {/* Penghitung level untuk guru */}
+      <div className="glass absolute left-4 bottom-4 z-40 hidden rounded-full px-4 py-1.5 font-ui text-xs font-bold uppercase tracking-widest text-ink-dim lg:block">
+        Level {index + 1} / {TOTAL_SLIDES}
       </div>
     </main>
   );

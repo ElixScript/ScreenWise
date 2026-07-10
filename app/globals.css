@@ -1,31 +1,41 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palet utama presentasi */
-  --color-brand-blue: #4f9dff;
-  --color-brand-green: #5ccb5f;
-  --color-brand-yellow: #ffd54f;
-  --color-brand-orange: #ffb74d;
-  --color-brand-purple: #b39ddb;
-  --color-brand-pink: #f48fb1;
-  --color-brand-ink: #2d3a53;
+  /* ===== GAME UI PALETTE ===== */
+  /* Latar dalam: deep space navy, bukan hitam pekat */
+  --color-deep: #0a0f26;
+  --color-deep-2: #131a3d;
+  --color-deep-3: #1b2352;
+
+  /* Neon accents */
+  --color-neon-cyan: #22d3ee;
+  --color-neon-violet: #a78bfa;
+  --color-neon-pink: #f472b6;
+  --color-neon-amber: #fbbf24;
+  --color-neon-lime: #4ade80;
+  --color-neon-red: #fb7185;
+
+  --color-ink-bright: #eef2ff;
+  --color-ink-dim: #94a3c7;
 
   /* Font (di-inject lewat next/font pada layout) */
   --font-display: var(--font-baloo);
   --font-body: var(--font-nunito);
   --font-ui: var(--font-poppins);
 
-  /* Bayangan lembut khas kartu anak-anak */
-  --shadow-soft: 0 10px 30px -10px rgb(45 58 83 / 0.18);
-  --shadow-pop: 0 18px 45px -12px rgb(45 58 83 / 0.28);
+  /* Premium shadows + glow */
+  --shadow-soft: 0 12px 40px -12px rgb(0 0 0 / 0.55);
+  --shadow-pop: 0 24px 60px -16px rgb(0 0 0 / 0.65);
+  --shadow-glow-cyan: 0 0 24px -2px rgb(34 211 238 / 0.55), 0 12px 40px -12px rgb(0 0 0 / 0.5);
+  --shadow-glow-violet: 0 0 24px -2px rgb(167 139 250 / 0.55), 0 12px 40px -12px rgb(0 0 0 / 0.5);
+  --shadow-glow-pink: 0 0 24px -2px rgb(244 114 182 / 0.55), 0 12px 40px -12px rgb(0 0 0 / 0.5);
+  --shadow-glow-amber: 0 0 24px -2px rgb(251 191 36 / 0.55), 0 12px 40px -12px rgb(0 0 0 / 0.5);
+  --shadow-glow-lime: 0 0 24px -2px rgb(74 222 128 / 0.55), 0 12px 40px -12px rgb(0 0 0 / 0.5);
 
-  --radius-blob: 2.5rem;
+  --radius-blob: 1.75rem;
 
   --animate-float: float 5s ease-in-out infinite;
   --animate-float-slow: float 8s ease-in-out infinite;
-  --animate-wiggle: wiggle 2.4s ease-in-out infinite;
-  --animate-twinkle: twinkle 2s ease-in-out infinite;
-  --animate-sway: sway 4s ease-in-out infinite;
 
   @keyframes float {
     0%,
@@ -36,38 +46,13 @@
       transform: translateY(-14px);
     }
   }
+}
 
-  @keyframes wiggle {
-    0%,
-    100% {
-      transform: rotate(-3deg);
-    }
-    50% {
-      transform: rotate(3deg);
-    }
-  }
-
-  @keyframes twinkle {
-    0%,
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.45;
-      transform: scale(0.8);
-    }
-  }
-
-  @keyframes sway {
-    0%,
-    100% {
-      transform: rotate(-2deg);
-    }
-    50% {
-      transform: rotate(2deg);
-    }
-  }
+/* Sudut animated border membutuhkan @property agar bisa dianimasikan */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
 
 html,
@@ -79,44 +64,128 @@ body {
 
 body {
   font-family: var(--font-body), sans-serif;
-  color: var(--color-brand-ink);
-  background: #ffffff;
+  color: var(--color-ink-bright);
+  background: var(--color-deep);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Judul default memakai font display yang bulat & ramah */
 h1,
 h2,
 h3 {
   font-family: var(--font-display), var(--font-body), sans-serif;
 }
 
-/* Fokus keyboard yang jelas untuk anak & guru */
+/* Fokus keyboard yang jelas */
 :focus-visible {
-  outline: 4px solid var(--color-brand-blue);
+  outline: 3px solid var(--color-neon-cyan);
   outline-offset: 3px;
   border-radius: 12px;
 }
 
 ::selection {
-  background: var(--color-brand-yellow);
-  color: var(--color-brand-ink);
+  background: var(--color-neon-violet);
+  color: var(--color-deep);
 }
 
-/* Sembunyikan scrollbar (strip navigasi) namun tetap bisa digulir */
+/* ===== GLASSMORPHISM (dark premium) ===== */
+.glass {
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.04));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 12px 40px -12px rgb(0 0 0 / 0.5);
+}
+
+.glass-bright {
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.07));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.18),
+    0 16px 50px -14px rgb(0 0 0 / 0.6);
+}
+
+/* ===== ANIMATED GRADIENT BORDER ===== */
+.border-animated {
+  position: relative;
+  background:
+    linear-gradient(var(--color-deep-2), var(--color-deep-2)) padding-box,
+    conic-gradient(
+        from var(--border-angle),
+        #22d3ee,
+        #a78bfa 25%,
+        #f472b6 50%,
+        #fbbf24 75%,
+        #22d3ee
+      )
+      border-box;
+  border: 2px solid transparent;
+  animation: border-spin 5s linear infinite;
+}
+
+@keyframes border-spin {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+/* ===== GRADIENT TEXT ===== */
+/* padding-bottom memperluas area lukis agar ekor huruf (g, y, j) tidak
+   terpotong saat memakai background-clip: text pada font berdescender panjang. */
+.text-gradient {
+  background: linear-gradient(100deg, #67e8f9 0%, #a78bfa 45%, #f472b6 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.16em;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(100deg, #fde68a 0%, #fbbf24 50%, #fb923c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.16em;
+}
+
+/* ===== SHINE SWEEP (tombol premium) ===== */
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgb(255 255 255 / 0.35) 48%,
+    rgb(255 255 255 / 0.1) 52%,
+    transparent 70%
+  );
+  background-size: 240% 100%;
+  animation: shine-sweep 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shine-sweep {
+  0% {
+    background-position: 120% 0;
+  }
+  55%,
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+/* Sembunyikan scrollbar namun tetap bisa digulir */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-/* Kartu kaca ringan (glassmorphism lembut) */
-.glass {
-  background: rgb(255 255 255 / 0.72);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 /* Hormati preferensi pengurangan gerakan */

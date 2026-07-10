@@ -5,7 +5,7 @@ import { Volume2, VolumeX, Maximize, Minimize } from "lucide-react";
 import { useSound } from "@/hooks/useSound";
 import { useFullscreen } from "@/hooks/useFullscreen";
 
-/** Tombol bulat kaca untuk kontrol presentasi. */
+/** Tombol bulat kaca gelap untuk kontrol presentasi. */
 function HudButton({
   onClick,
   label,
@@ -21,7 +21,7 @@ function HudButton({
       onClick={onClick}
       whileHover={{ scale: 1.12 }}
       whileTap={{ scale: 0.9 }}
-      className="glass flex h-12 w-12 cursor-pointer items-center justify-center rounded-full text-brand-ink shadow-soft"
+      className="glass flex h-12 w-12 cursor-pointer items-center justify-center rounded-full text-ink-bright transition-shadow hover:shadow-glow-cyan"
       aria-label={label}
       title={label}
     >

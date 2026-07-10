@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ThumbsUp, ThumbsDown, ArrowRight, RotateCcw, Star } from "lucide-react";
+import { ThumbsUp, ThumbsDown, ArrowRight, RotateCcw, Star, Trophy, Swords } from "lucide-react";
 import Mascot from "@/components/mascot/Mascot";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import BigButton from "@/components/ui/BigButton";
 import SlideBody from "@/components/ui/SlideBody";
-import { SparkleField, FloatingBlobs } from "@/components/backgrounds/Decor";
+import { AuroraBackground, ParticleField } from "@/components/backgrounds/Aurora";
 import { GAME_SITUATIONS } from "@/lib/data/game";
+import { GAME_ICONS } from "@/lib/icons";
 import { burstConfetti, celebrationConfetti } from "@/lib/confetti";
 import { useSound } from "@/hooks/useSound";
 
@@ -22,6 +23,7 @@ export default function GameSlide() {
 
   const { play } = useSound();
   const situation = GAME_SITUATIONS[index];
+  const SituationIcon = GAME_ICONS[situation.id];
   const isLast = index === GAME_SITUATIONS.length - 1;
 
   const answer = (choice: "bijak" | "tidak") => {
@@ -57,24 +59,22 @@ export default function GameSlide() {
   };
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-gradient-to-br from-orange-100 via-rose-50 to-fuchsia-100">
-      <FloatingBlobs colors={["#FFDCC2", "#FFD6E8", "#F3D9FA"]} />
-      <SparkleField count={14} color="#FF8FAB" />
+    <div className="relative h-full w-full overflow-hidden">
+      <AuroraBackground tone="pink" intensity={0.5} />
+      <ParticleField count={22} color="#fbcfe8" />
 
-      {/* Papan skor */}
+      {/* HUD skor */}
       <motion.div
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4, type: "spring", stiffness: 200, damping: 18 }}
-        className="glass absolute left-4 top-4 z-20 flex items-center gap-2 rounded-full px-5 py-2.5 shadow-soft md:left-8 md:top-6"
+        className="glass-bright absolute left-4 top-4 z-20 flex items-center gap-2.5 rounded-2xl px-5 py-2.5 md:left-8 md:top-6"
       >
-        <Star className="h-6 w-6 fill-brand-yellow text-amber-400" />
-        <span className="font-ui text-lg font-bold text-brand-ink md:text-xl">
-          Skor Kelas: {score}
-        </span>
+        <Star className="h-6 w-6 fill-amber-300 text-amber-300 drop-shadow-[0_0_6px_rgb(251_191_36/0.8)]" />
+        <span className="font-ui text-lg font-bold text-ink-bright md:text-xl">{score}</span>
         {phase !== "done" && (
-          <span className="ml-1 rounded-full bg-white/80 px-3 py-0.5 font-ui text-sm font-semibold text-brand-ink/60">
-            Soal {index + 1}/{GAME_SITUATIONS.length}
+          <span className="ml-1 rounded-full bg-white/10 px-3 py-0.5 font-ui text-xs font-semibold uppercase tracking-widest text-ink-dim md:text-sm">
+            Ronde {index + 1}/{GAME_SITUATIONS.length}
           </span>
         )}
       </motion.div>
@@ -87,40 +87,49 @@ export default function GameSlide() {
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
             className="flex flex-col items-center gap-5 text-center"
           >
-            <motion.span
-              className="text-7xl md:text-8xl"
-              animate={{ rotate: [0, -10, 10, 0], scale: [1, 1.15, 1] }}
-              transition={{ duration: 1.2, repeat: Infinity }}
-              aria-hidden
+            <motion.div
+              animate={{ rotate: [0, -8, 8, 0], scale: [1, 1.12, 1] }}
+              transition={{ duration: 1.4, repeat: Infinity }}
+              className="flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-b from-amber-300 to-orange-500 shadow-glow-amber md:h-28 md:w-28"
             >
-              🎉
-            </motion.span>
-            <h2 className="font-display text-5xl font-extrabold text-brand-ink md:text-7xl">
+              <Trophy className="h-12 w-12 text-deep md:h-14 md:w-14" strokeWidth={2} />
+            </motion.div>
+            <h2 className="text-gradient-gold font-display text-5xl font-extrabold md:text-7xl">
               Kalian Hebat!
             </h2>
-            <p className="text-2xl font-bold text-brand-ink/70">
-              Kelas berhasil mengumpulkan {score} dari {GAME_SITUATIONS.length} bintang! ⭐
+            <p className="text-2xl font-bold text-ink-dim">
+              Kelas mengumpulkan {score} dari {GAME_SITUATIONS.length} bintang!
             </p>
-            <Mascot pose="cheer" face="excited" className="w-40 md:w-52" />
-            <BigButton color="orange" onClick={restart} ariaLabel="Main lagi">
+            <Mascot pose="cheer" face="excited" className="w-40 md:w-48" />
+            <BigButton color="amber" onClick={restart} ariaLabel="Main lagi">
               <RotateCcw size={22} /> Main Lagi
             </BigButton>
           </motion.div>
         ) : (
           <>
+            {/* Kicker arena */}
+            <motion.span
+              initial={{ opacity: 0, y: -14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="glass flex items-center gap-2 rounded-full px-4 py-1.5 font-ui text-xs font-semibold uppercase tracking-[0.22em] text-pink-300 md:text-sm"
+            >
+              <Swords className="h-4 w-4" aria-hidden /> Level 07 — Arena: Bijak atau Tidak?
+            </motion.span>
+
             {/* Maskot pembawa acara */}
             <div className="flex items-end gap-3">
               <Mascot
                 pose={phase === "feedback" && lastCorrect ? "cheer" : "wave"}
                 face={phase === "feedback" && !lastCorrect ? "think" : "excited"}
-                className="w-24 md:w-32"
+                className="w-24 md:w-28"
               />
               <SpeechBubble tail="left" className="max-w-md">
                 {phase === "question"
-                  ? "Menurut kalian... BIJAK atau TIDAK YA? 🤔"
+                  ? "Menurut kalian... BIJAK atau TIDAK YA?"
                   : lastCorrect
-                    ? "Betul sekali! Kalian pintar! 🌟"
-                    : "Belum tepat... tapi tidak apa-apa, ayo semangat! 💪"}
+                    ? "Betul sekali! Kalian pintar!"
+                    : "Belum tepat... tapi tidak apa-apa, ayo semangat!"}
               </SpeechBubble>
             </div>
 
@@ -140,23 +149,23 @@ export default function GameSlide() {
                     ? { duration: 0.5 }
                     : { type: "spring", stiffness: 220, damping: 20 }
                 }
-                className={`flex w-full max-w-3xl flex-col items-center gap-3 rounded-blob p-6 shadow-pop ring-8 md:p-8 ${
+                className={`flex w-full max-w-3xl flex-col items-center gap-4 rounded-blob p-6 md:p-8 ${
                   phase === "feedback"
                     ? lastCorrect
-                      ? "bg-emerald-50 ring-emerald-300"
-                      : "bg-rose-50 ring-rose-200"
-                    : "bg-white/90 ring-white/80"
+                      ? "glass-bright ring-2 ring-emerald-400/60 shadow-glow-lime"
+                      : "glass-bright ring-2 ring-rose-400/60 shadow-glow-pink"
+                    : "glass-bright ring-1 ring-white/15"
                 }`}
               >
                 <motion.span
-                  className="text-6xl md:text-7xl"
-                  animate={{ y: [0, -8, 0] }}
+                  className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-fuchsia-400 to-purple-700 text-white shadow-glow-violet md:h-20 md:w-20"
+                  animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   aria-hidden
                 >
-                  {situation.emoji}
+                  <SituationIcon className="h-8 w-8 md:h-10 md:w-10" strokeWidth={2.2} />
                 </motion.span>
-                <p className="text-center font-display text-2xl font-bold leading-snug text-brand-ink md:text-4xl">
+                <p className="text-center font-display text-2xl font-bold leading-snug text-ink-bright md:text-4xl">
                   {situation.text}
                 </p>
                 {phase === "feedback" && (
@@ -167,13 +176,20 @@ export default function GameSlide() {
                     className="flex flex-col items-center gap-3"
                   >
                     <span
-                      className={`rounded-full px-5 py-1.5 font-display text-lg font-bold text-white md:text-xl ${
-                        situation.answer === "bijak" ? "bg-brand-green" : "bg-rose-400"
+                      className={`flex items-center gap-2 rounded-full px-5 py-1.5 font-display text-lg font-bold uppercase tracking-wide md:text-xl ${
+                        situation.answer === "bijak"
+                          ? "bg-gradient-to-r from-lime-300 to-emerald-500 text-deep shadow-glow-lime"
+                          : "bg-gradient-to-r from-rose-400 to-pink-600 text-white shadow-glow-pink"
                       }`}
                     >
-                      Jawaban: {situation.answer === "bijak" ? "👍 BIJAK" : "👎 TIDAK BIJAK"}
+                      {situation.answer === "bijak" ? (
+                        <ThumbsUp className="h-5 w-5" aria-hidden />
+                      ) : (
+                        <ThumbsDown className="h-5 w-5" aria-hidden />
+                      )}
+                      {situation.answer === "bijak" ? "BIJAK" : "TIDAK BIJAK"}
                     </span>
-                    <p className="text-center text-lg font-semibold text-brand-ink/75 md:text-xl">
+                    <p className="text-center text-lg font-semibold text-ink-dim md:text-xl">
                       {situation.explanation}
                     </p>
                   </motion.div>
@@ -184,16 +200,16 @@ export default function GameSlide() {
             {/* Tombol jawaban / lanjut */}
             {phase === "question" ? (
               <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-                <BigButton size="xl" color="green" onClick={() => answer("bijak")} ariaLabel="Jawab bijak">
-                  <ThumbsUp size={28} /> BIJAK
+                <BigButton size="xl" color="lime" onClick={() => answer("bijak")} ariaLabel="Jawab bijak">
+                  <ThumbsUp size={28} /> Bijak
                 </BigButton>
-                <BigButton size="xl" color="orange" onClick={() => answer("tidak")} ariaLabel="Jawab tidak bijak">
-                  <ThumbsDown size={28} /> TIDAK BIJAK
+                <BigButton size="xl" color="pink" onClick={() => answer("tidak")} ariaLabel="Jawab tidak bijak">
+                  <ThumbsDown size={28} /> Tidak Bijak
                 </BigButton>
               </div>
             ) : (
-              <BigButton size="lg" color="blue" onClick={next} ariaLabel={isLast ? "Lihat hasil" : "Soal berikutnya"}>
-                {isLast ? "Lihat Hasil" : "Soal Berikutnya"} <ArrowRight size={24} />
+              <BigButton size="lg" color="cyan" onClick={next} ariaLabel={isLast ? "Lihat hasil" : "Ronde berikutnya"}>
+                {isLast ? "Lihat Hasil" : "Ronde Berikutnya"} <ArrowRight size={24} />
               </BigButton>
             )}
           </>

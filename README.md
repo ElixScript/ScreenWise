@@ -1,30 +1,32 @@
 # 🤖 Gadget Cerdas — Presentasi Interaktif untuk Anak SD
 
-Website presentasi interaktif untuk sosialisasi **"Penggunaan Gadget yang Sehat dan Bijak"** kepada siswa kelas 4 SD. Dirancang seperti permainan edukasi — bukan slide PowerPoint — lengkap dengan maskot, game show kelas, quiz berbintang, dan animasi di setiap halaman.
+Website presentasi interaktif untuk sosialisasi **"Penggunaan Gadget yang Sehat dan Bijak"** kepada siswa kelas 4 SD — dikemas dengan pendekatan **Game UI premium**: aurora mesh background, glassmorphism, neon glow, kartu 3D tilt, dan HUD level ala game modern. Bukan PowerPoint, bukan website anak TK.
 
-Ditemani **Bimo si Robot Pintar** 🤖, siswa diajak menjelajah 10 halaman petualangan belajar.
+Ditemani **Bimo si Robot Pintar** 🤖, siswa menjelajah 10 level petualangan belajar.
 
 ## ✨ Fitur
 
-- 🎬 **10 halaman** dengan identitas visual & layout yang berbeda-beda
-- 🤖 **Maskot animasi** (SVG orisinal) yang menyapa, memberi tips, dan merayakan keberhasilan
-- 📰 **Slide kisah nyata** — kliping berita asli dengan nuansa tenang & reflektif (peduli, bukan menakut-nakuti)
-- 🎮 **Game show "Bijak atau Tidak?"** — 10 situasi, papan skor kelas, confetti
-- 🏆 **Quiz berbintang** — 5 soal, progress bar, boleh mencoba lagi, tanpa mempermalukan siswa
+- 🎮 **Game UI premium** — deep navy + aurora mesh gradient, glass panel, glow, partikel melayang, animated gradient border
+- 🗺️ **HUD level map** — navigasi bawah bergaya peta level game dengan node bernomor & centang progres
+- 🎬 **10 level** dengan nuansa aurora & layout yang berbeda-beda, transisi sinematik (blur/zoom/slide)
+- 🤖 **Maskot hover-bot** (SVG orisinal) dengan visor neon, energy core, dan pose dinamis
+- 🃏 **Kartu 3D tilt** yang miring mengikuti kursor + micro-interaction di semua komponen
+- 📰 **Slide kisah nyata** — kliping berita asli dengan nuansa sinematik serius (peduli, bukan menakut-nakuti)
+- ⚔️ **Arena "Bijak atau Tidak?"** — 10 ronde, HUD skor kelas, tombol neon, confetti
+- 🏆 **Quiz berbintang** — 5 soal, progress bar gradient, boleh mencoba lagi, tanpa mempermalukan siswa
 - 🔊 **Efek suara lembut** disintesis via Web Audio API (bebas hak cipta) + tombol mute
-- 🎊 Confetti, sparkle, balon, pelangi, dan micro-interaction di semua komponen
 - ⌨️ **Navigasi keyboard** (←/→, PageUp/Down, Home/End) + tombol layar penuh
-- ♿ Aksesibel: aria-label, target klik ≥ 44px, kontras baik, hormat `prefers-reduced-motion`
+- ♿ Aksesibel: aria-label, target klik ≥ 44px, kontras tinggi, hormat `prefers-reduced-motion`
 
 ## 🛠️ Teknologi
 
 | Bagian | Teknologi |
 | --- | --- |
 | Framework | Next.js 15 (App Router) + TypeScript |
-| Styling | Tailwind CSS v4 |
-| Animasi | Framer Motion |
+| Styling | Tailwind CSS v4 (design token: neon, glow, glass) |
+| Animasi | Framer Motion (tilt 3D, spring, cinematic transition) |
 | Ikon | Lucide React |
-| Efek | canvas-confetti |
+| Efek | canvas-confetti, Web Audio API |
 | Font | Baloo 2, Nunito, Poppins (next/font) |
 | Ilustrasi | SVG orisinal buatan sendiri |
 

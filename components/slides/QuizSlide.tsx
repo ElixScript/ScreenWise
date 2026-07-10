@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, RotateCcw } from "lucide-react";
+import { ArrowRight, RotateCcw, Check, X, Star, Trophy } from "lucide-react";
 import MascotSpeech from "@/components/mascot/MascotSpeech";
 import BigButton from "@/components/ui/BigButton";
 import SlideBody from "@/components/ui/SlideBody";
 import Mascot from "@/components/mascot/Mascot";
-import { SparkleField, FloatingBlobs } from "@/components/backgrounds/Decor";
+import { AuroraBackground, ParticleField } from "@/components/backgrounds/Aurora";
 import { QUIZ_QUESTIONS, getQuizPraise } from "@/lib/data/quiz";
+import { QUIZ_ICONS } from "@/lib/icons";
 import { burstConfetti, starConfetti, celebrationConfetti } from "@/lib/confetti";
 import { useSound } from "@/hooks/useSound";
 
@@ -21,6 +22,7 @@ export default function QuizSlide() {
 
   const { play } = useSound();
   const question = QUIZ_QUESTIONS[index];
+  const QuestionIcon = QUIZ_ICONS[question.id];
   const total = QUIZ_QUESTIONS.length;
   const isLast = index === total - 1;
   const progress = ((index + (answeredCorrect ? 1 : 0)) / total) * 100;
@@ -65,9 +67,9 @@ export default function QuizSlide() {
   };
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-gradient-to-br from-sky-100 via-emerald-50 to-teal-50">
-      <FloatingBlobs colors={["#BFDCFF", "#CDEFCE", "#C9F2E4"]} />
-      <SparkleField count={12} color="#5CCB5F" />
+    <div className="relative h-full w-full overflow-hidden">
+      <AuroraBackground tone="cyan" intensity={0.5} />
+      <ParticleField count={18} />
 
       <SlideBody className="gap-5">
         {finished ? (
@@ -77,43 +79,51 @@ export default function QuizSlide() {
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
             className="flex flex-col items-center gap-4 text-center"
           >
-            <div className="flex gap-2" role="img" aria-label={`${stars} dari ${total} bintang`}>
+            <div className="flex gap-3" role="img" aria-label={`${stars} dari ${total} bintang`}>
               {Array.from({ length: total }).map((_, i) => (
                 <motion.span
                   key={i}
-                  className="text-5xl md:text-6xl"
                   initial={{ scale: 0, rotate: -60 }}
                   animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.4 + i * 0.25, type: "spring", stiffness: 300, damping: 12 }}
+                  transition={{ delay: 0.4 + i * 0.22, type: "spring", stiffness: 300, damping: 12 }}
                 >
-                  {i < stars ? "⭐" : "☆"}
+                  <Star
+                    className={`h-12 w-12 md:h-14 md:w-14 ${
+                      i < stars
+                        ? "fill-amber-300 text-amber-300 drop-shadow-[0_0_10px_rgb(251_191_36/0.8)]"
+                        : "text-white/20"
+                    }`}
+                  />
                 </motion.span>
               ))}
             </div>
-            <h2 className="font-display text-5xl font-extrabold text-brand-ink md:text-6xl">
+            <h2 className="text-gradient-gold font-display text-5xl font-extrabold md:text-6xl">
               {stars === total ? "Sempurna!" : "Hebat!"}
             </h2>
-            <p className="max-w-xl text-xl font-bold text-brand-ink/70 md:text-2xl">
+            <p className="max-w-xl text-xl font-bold text-ink-dim md:text-2xl">
               {getQuizPraise(stars, total)}
             </p>
-            <Mascot pose="cheer" face="excited" className="w-36 md:w-48" />
-            <BigButton color="green" onClick={restart} ariaLabel="Ulangi quiz">
+            <Mascot pose="cheer" face="excited" className="w-36 md:w-44" />
+            <BigButton color="lime" onClick={restart} ariaLabel="Ulangi quiz">
               <RotateCcw size={22} /> Coba Lagi
             </BigButton>
           </motion.div>
         ) : (
           <>
-            {/* Progress */}
+            {/* Progress HUD */}
             <div className="w-full max-w-2xl">
-              <div className="mb-1.5 flex items-center justify-between font-ui text-sm font-bold text-brand-ink/60 md:text-base">
-                <span>
-                  🏆 Soal {index + 1} dari {total}
+              <div className="mb-1.5 flex items-center justify-between font-ui text-xs font-bold uppercase tracking-widest text-ink-dim md:text-sm">
+                <span className="flex items-center gap-1.5">
+                  <Trophy className="h-4 w-4 text-cyan-300" aria-hidden />
+                  Level 08 — Quiz · Soal {index + 1}/{total}
                 </span>
-                <span>⭐ {stars}</span>
+                <span className="flex items-center gap-1">
+                  <Star className="h-4 w-4 fill-amber-300 text-amber-300" aria-hidden /> {stars}
+                </span>
               </div>
-              <div className="h-4 overflow-hidden rounded-full bg-white/80 shadow-inner ring-2 ring-white">
+              <div className="glass h-4 overflow-hidden rounded-full">
                 <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-brand-green to-emerald-400"
+                  className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 shadow-glow-cyan"
                   animate={{ width: `${progress}%` }}
                   transition={{ type: "spring", stiffness: 120, damping: 20 }}
                 />
@@ -128,17 +138,17 @@ export default function QuizSlide() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ type: "spring", stiffness: 220, damping: 20 }}
-                className="flex w-full max-w-2xl items-center gap-4 rounded-blob bg-white/90 p-5 shadow-pop ring-8 ring-white/70 md:p-6"
+                className="glass-bright flex w-full max-w-2xl items-center gap-4 rounded-blob p-5 ring-1 ring-white/15 md:p-6"
               >
                 <motion.span
-                  className="text-5xl md:text-6xl"
-                  animate={{ rotate: [0, -8, 8, 0] }}
+                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 text-white shadow-glow-cyan md:h-16 md:w-16"
+                  animate={{ rotate: [0, -6, 6, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                   aria-hidden
                 >
-                  {question.emoji}
+                  <QuestionIcon className="h-7 w-7 md:h-8 md:w-8" strokeWidth={2.2} />
                 </motion.span>
-                <h3 className="font-display text-2xl font-bold leading-snug text-brand-ink md:text-3xl">
+                <h3 className="font-display text-2xl font-bold leading-snug text-ink-bright md:text-3xl">
                   {question.question}
                 </h3>
               </motion.div>
@@ -156,31 +166,41 @@ export default function QuizSlide() {
                     onClick={() => choose(option.key)}
                     initial={{ opacity: 0, x: -40 }}
                     animate={
-                      isWrong
-                        ? { x: [0, -10, 10, -6, 6, 0], opacity: 1 }
-                        : { opacity: 1, x: 0 }
+                      isWrong ? { x: [0, -10, 10, -6, 6, 0], opacity: 1 } : { opacity: 1, x: 0 }
                     }
                     transition={
-                      isWrong ? { duration: 0.45 } : { delay: 0.2 + i * 0.1, type: "spring", stiffness: 240, damping: 20 }
+                      isWrong
+                        ? { duration: 0.45 }
+                        : { delay: 0.2 + i * 0.1, type: "spring", stiffness: 240, damping: 20 }
                     }
-                    whileHover={!answeredCorrect && !isWrong ? { scale: 1.03, x: 6 } : undefined}
+                    whileHover={!answeredCorrect && !isWrong ? { scale: 1.02, x: 6 } : undefined}
                     whileTap={!answeredCorrect ? { scale: 0.97 } : undefined}
                     disabled={answeredCorrect}
-                    className={`flex min-h-[56px] cursor-pointer items-center gap-4 rounded-3xl px-5 py-3 text-left shadow-soft ring-4 transition-colors md:px-6 ${
+                    className={`flex min-h-[56px] cursor-pointer items-center gap-4 rounded-2xl px-5 py-3 text-left transition-all md:px-6 ${
                       isCorrectPick
-                        ? "bg-brand-green text-white ring-emerald-200"
+                        ? "bg-gradient-to-r from-lime-400/90 to-emerald-500/90 text-deep shadow-glow-lime ring-2 ring-emerald-300"
                         : isWrong
-                          ? "bg-rose-100 text-brand-ink/50 ring-rose-200"
-                          : "bg-white/90 text-brand-ink ring-white/70 hover:ring-sky-200"
+                          ? "glass text-ink-dim ring-2 ring-rose-400/50 opacity-60"
+                          : "glass text-ink-bright ring-1 ring-white/10 hover:ring-cyan-400/50 hover:shadow-glow-cyan"
                     } disabled:cursor-default`}
                     aria-label={`Jawaban ${option.key}: ${option.label}`}
                   >
                     <span
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-display text-lg font-bold ${
-                        isCorrectPick ? "bg-white/25 text-white" : "bg-sky-100 text-sky-700"
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-display text-lg font-bold ${
+                        isCorrectPick
+                          ? "bg-white/30 text-deep"
+                          : isWrong
+                            ? "bg-rose-400/20 text-rose-300"
+                            : "bg-cyan-400/15 text-cyan-300"
                       }`}
                     >
-                      {isCorrectPick ? "✓" : isWrong ? "✗" : option.key}
+                      {isCorrectPick ? (
+                        <Check className="h-5 w-5" strokeWidth={3} />
+                      ) : isWrong ? (
+                        <X className="h-5 w-5" strokeWidth={3} />
+                      ) : (
+                        option.key
+                      )}
                     </span>
                     <span className="font-display text-xl font-bold md:text-2xl">{option.label}</span>
                   </motion.button>
@@ -199,16 +219,16 @@ export default function QuizSlide() {
                     className="flex flex-wrap items-center justify-center gap-4"
                   >
                     <MascotSpeech pose="cheer" face="excited" mascotClassName="w-20 md:w-24" bubbleClassName="max-w-xs">
-                      Hebat! Jawabanmu benar! 🎉
+                      Hebat! Jawabanmu benar!
                     </MascotSpeech>
-                    <BigButton size="md" color="blue" onClick={next} ariaLabel={isLast ? "Lihat skor" : "Soal berikutnya"}>
+                    <BigButton size="md" color="cyan" onClick={next} ariaLabel={isLast ? "Lihat skor" : "Soal berikutnya"}>
                       {isLast ? "Lihat Skor" : "Lanjut"} <ArrowRight size={20} />
                     </BigButton>
                   </motion.div>
                 ) : wrongKeys.length > 0 ? (
                   <motion.div key="wrong" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}>
                     <MascotSpeech pose="think" face="think" mascotClassName="w-20 md:w-24" bubbleClassName="max-w-xs">
-                      Ayo coba lagi! Kamu pasti bisa! 💪
+                      Ayo coba lagi! Kamu pasti bisa!
                     </MascotSpeech>
                   </motion.div>
                 ) : null}
