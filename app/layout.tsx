@@ -21,7 +21,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Gadget Cerdas — Belajar Bijak Menggunakan Gadget",
   description:
-    "Presentasi interaktif untuk siswa SD: penggunaan gadget yang sehat dan bijak, bersama Bimo si robot pintar!",
+    "Presentasi interaktif untuk siswa SD: penggunaan gadget yang sehat dan bijak, bersama Kosmo si penjelajah angkasa!",
 };
 
 export default function RootLayout({

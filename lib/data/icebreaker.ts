@@ -12,7 +12,7 @@ export const ICE_BREAKER_ITEMS: IceBreakerItem[] = [
     id: "suka-youtube",
     emoji: "📺",
     question: "Siapa suka YouTube?",
-    mascotComment: "Hihi, Bimo juga suka nonton video edukasi!",
+    mascotComment: "Hihi, Kosmo juga suka nonton video edukasi!",
     accent: "orange",
   },
   {

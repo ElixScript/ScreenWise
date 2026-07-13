@@ -2,14 +2,14 @@
 
 Website presentasi interaktif untuk sosialisasi **"Penggunaan Gadget yang Sehat dan Bijak"** kepada siswa kelas 4 SD — dikemas dengan pendekatan **Game UI premium**: aurora mesh background, glassmorphism, neon glow, kartu 3D tilt, dan HUD level ala game modern. Bukan PowerPoint, bukan website anak TK.
 
-Ditemani **Bimo si Robot Pintar** 🤖, siswa menjelajah 10 level petualangan belajar.
+Ditemani **Kosmo si Penjelajah Angkasa** 🧑‍🚀, siswa menjelajah 10 level petualangan belajar.
 
 ## ✨ Fitur
 
 - 🎮 **Game UI premium** — deep navy + aurora mesh gradient, glass panel, glow, partikel melayang, animated gradient border
 - 🗺️ **HUD level map** — navigasi bawah bergaya peta level game dengan node bernomor & centang progres
 - 🎬 **10 level** dengan nuansa aurora & layout yang berbeda-beda, transisi sinematik (blur/zoom/slide)
-- 🤖 **Maskot hover-bot** (SVG orisinal) dengan visor neon, energy core, dan pose dinamis
+- 🧑‍🚀 **Maskot astronaut Kosmo** (SVG orisinal) mengambang zero-gravity dengan sarung tangan terartikulasi, visor bercahaya, dan 5 pose dinamis
 - 🃏 **Kartu 3D tilt** yang miring mengikuti kursor + micro-interaction di semua komponen
 - 📰 **Slide kisah nyata** — kliping berita asli dengan nuansa sinematik serius (peduli, bukan menakut-nakuti)
 - ⚔️ **Arena "Bijak atau Tidak?"** — 10 ronde, HUD skor kelas, tombol neon, confetti
@@ -46,7 +46,7 @@ app/                      # Layout, halaman, design token global
 components/
   presentation/           # Shell presentasi: transisi, navigasi, HUD
   slides/                 # 10 halaman presentasi
-  mascot/                 # Bimo si Robot Pintar + speech bubble
+  mascot/                 # Kosmo si Penjelajah Angkasa + speech bubble
   illustrations/          # SVG orisinal: karakter, gadget, alam, adegan
   backgrounds/            # Blob, sparkle, doodle animasi
   ui/                     # Tombol, kartu, judul reusable

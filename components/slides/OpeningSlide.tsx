@@ -97,7 +97,7 @@ export default function OpeningSlide({ onNext }: SlideProps) {
               transition={{ delay: 2.1, duration: 0.6 }}
               className="mt-4 text-lg font-semibold text-ink-dim md:text-xl"
             >
-              Petualangan seru bersama Bimo si Robot Pintar
+              Petualangan seru bersama Kosmo si Penjelajah Angkasa
             </motion.p>
           </div>
         </div>

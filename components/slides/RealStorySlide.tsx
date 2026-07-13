@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Newspaper, HeartHandshake } from "lucide-react";
 import SlideTitle from "@/components/ui/SlideTitle";
 import SlideBody from "@/components/ui/SlideBody";
-import MascotSpeech from "@/components/mascot/MascotSpeech";
 import { AuroraBackground, ParticleField } from "@/components/backgrounds/Aurora";
 import { REALSTORY_ICONS } from "@/lib/icons";
 import { useSound } from "@/hooks/useSound";
@@ -134,13 +133,6 @@ export default function RealStorySlide() {
             </motion.div>
           </div>
         </div>
-
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>
-          <MascotSpeech pose="think" face="think" bubbleClassName="max-w-xl">
-            Bimo sayang kalian semua. Supaya tetap aman dan sehat, yuk kita
-            pelajari 5 aturan pentingnya!
-          </MascotSpeech>
-        </motion.div>
       </SlideBody>
     </div>
   );

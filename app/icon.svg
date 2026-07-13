@@ -4,12 +4,18 @@
       <stop offset="0" stop-color="#1b2352"/>
       <stop offset="1" stop-color="#0a0f26"/>
     </linearGradient>
+    <radialGradient id="hel" cx="38%" cy="30%" r="75%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#c8cedb"/>
+    </radialGradient>
   </defs>
   <rect width="64" height="64" rx="16" fill="url(#bg)"/>
-  <rect x="14" y="18" width="36" height="28" rx="12" fill="#10173a" stroke="#22d3ee" stroke-width="2"/>
-  <circle cx="26" cy="31" r="4.5" fill="#67e8f9"/>
-  <circle cx="38" cy="31" r="4.5" fill="#67e8f9"/>
-  <path d="M25 38 Q32 44 39 38" stroke="#67e8f9" stroke-width="3" stroke-linecap="round" fill="none"/>
-  <line x1="32" y1="18" x2="32" y2="10" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="32" cy="8" r="3.5" fill="#22d3ee"/>
+  <rect x="26" y="10" width="12" height="7" rx="2" fill="#c3c8d6"/>
+  <rect x="14" y="26" width="7" height="14" rx="3" fill="#c3c8d6"/>
+  <rect x="43" y="26" width="7" height="14" rx="3" fill="#c3c8d6"/>
+  <circle cx="32" cy="34" r="22" fill="url(#hel)"/>
+  <circle cx="32" cy="35" r="16" fill="#0a1020"/>
+  <circle cx="32" cy="35" r="16" fill="none" stroke="#22d3ee" stroke-width="2"/>
+  <path d="M21 27 Q32 20 43 27 Q35 24 32 24 Q29 24 21 27 Z" fill="#ffffff" opacity="0.3"/>
+  <circle cx="40" cy="29" r="2.2" fill="#ffffff" opacity="0.6"/>
 </svg>
